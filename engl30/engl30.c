@@ -124,7 +124,17 @@ int main(int argc, const char ** argv, const char** env)
 		system("pause");
 		*/
 	} // end if "нет  стар fini.dat r+b" = нет. Сделан новый ,,,,,,,,,,,,,,,,,,,,,,,,
+	else // значит существует и открылся fini.dat по указат pFini
+	{
+		// считываем из pFini в дин пам - psettings всех настроек
+		size_t result = fread(psettings, sizeof(struct inidat), QUANTITYNAME, pFini);
+		// ввод в psettings имеющихся СТАРЫХ настроек и имени уже разб-го т-та - для открытия ф баз 
+		puts("\n Открылись и перенесены в psettings Начальные СТАРЫЕ  настр-ки (чт с дозап ini ф) \n");
+		// закрыть ф поток в который запис ini настройки 
+		system("pause");
+		fclose(pFini);	// закрытие fini.dat 
 
+	}
 
 
 
