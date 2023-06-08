@@ -1,6 +1,5 @@
-﻿//22/04/21 первый  вариант с передачей фиксиров. имени текста без ком стр
-//27/10/21 работает алф и частотно-алф сортировка
-
+﻿//25/05/23 первый  вариант 
+//09/06/23 Открываем из INI базу слов с переводом и корректируем перевод
 //
 //
 //
@@ -51,7 +50,7 @@ int main(int argc, const char ** argv, const char** env)
 
 
 	memset(psettings, '\0', sizeof(struct inidat)); //  обнуление динам структуры INI
-
+	/*
 	//СТАНДАРТНЫЕ настройки (из шаблона) динам структуры INI ===============================
 	psettings->sorttype = 1; // по умолч алфав сортировка
 	strncpy(psettings->name, TEXTIN, EN1); // имя  ф
@@ -60,7 +59,7 @@ int main(int argc, const char ** argv, const char** env)
 	strncpy(psettings->ininameafreqsortf, rename2(TEXTIN, "_freqalphsort.dat", 4), EN1); //имя част-алфав ф
 	psettings->inicountsepword = 0; // копия общего кол countnosort отсепарир-х слов в тексте
 	psettings->inicountnumword = 0; // копия общего кол countnosort отсепарир-х слов в тексте
-
+	*/
 	//______________________________________________						
 
 
