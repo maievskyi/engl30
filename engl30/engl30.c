@@ -47,7 +47,7 @@ int main(int argc, const char ** argv, const char** env)
 	{			// (!!! только "r" в VS чтото не получилось)
 		perror("commondictionary.dat");
 		puts("\n !!! НЕ найден файл commondictionary.dat \n  нажмите 'y или n'\n чтобы создать новый\n");
-		system("pause");
+		//system("pause");
 		if ('n' == _getch(stdin))//   ============
 		{
 			exit(1);
@@ -194,6 +194,11 @@ int main(int argc, const char ** argv, const char** env)
 	} // end if "нет  стар fini.dat r+b" = нет. Сделан новый ,,,,,,,,,,,,,,,,,,,,,,,,
 	else // значит существует и открылся fini.dat по указат pFini
 	{
+		// )создание  дин памяти psettings
+		psettings = (struct inidat*)malloc(sizeof(struct inidat)); //созд ДИН пам под стркт
+		if (psettings == NULL)printf("Не выделена память ini настройки программы \n");
+		else printf("  Выделена дин пам psettings = %d Bytes \n\
+ под ini структуру-настройки программы \n", sizeof(struct inidat));	// debug
 		// считываем из pFini в дин пам - psettings всех настроек
 		size_t result = fread(psettings, sizeof(struct inidat), QUANTITYNAME, pFini);
 		// ввод в psettings имеющихся СТАРЫХ настроек и имени уже разб-го т-та - для открытия ф баз 
