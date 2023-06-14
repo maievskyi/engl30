@@ -41,33 +41,33 @@ int main(int argc, const char ** argv, const char** env)
 	errno_t err;			//  переменная (int?) для вывода ошибок ? внутр переменная (int?)
 
 
-//________ открытие файла общей базы слов, или при отсутствии - созд новой
+//_ 1 a __ открытие файла общей базы слов, или при отсутствии - созд новой
 	err = fopen_s(&pFcommon, "commondictionary.dat", "r+b");	 // открывается ли на ЧТЕНИЕ с дозаписью
 	if (err)	// НЕТ  СТАРОГО файла общей базы слов "r+b" = нет. Делаем новый = "w+b"							
 	{			// (!!! только "r" в VS чтото не получилось)
 		perror("commondictionary.dat");
 		puts("\n !!! НЕ найден файл commondictionary.dat \n  нажмите 'y или n'\n чтобы создать новый\n");
 		//system("pause");
-		if ('n' == _getch(stdin))//   ============
-		{
-			exit(1);
-		}
-		else
+		if ('y' == _getch(stdin))//   ============
 		{
 			// значит открывается НОВЫЙ INI commondictionary.dat "w+b" на ЗАПИСЬ-ЧТЕНИЕ
 			err = fopen_s(&pFcommon, "commondictionary.dat", "w+b");
-			if (err)	//ошибка выхол почему-то  НЕ СОЗДАЛСЯ НОВЫЙ fini.dat
+			if (err)	//ошибка выход почему-то  НЕ СОЗДАЛСЯ НОВЫЙ commondictionary.dat
 			{
-				puts("\n !!! почемуто не создался новый commondictionary.dat \n");
+				puts("\n !!! почемуто не создался новый файл commondictionary.dat \n");
 				perror("commondictionary.dat");
 				//free(psettings);				//освоб памяти
 				system("pause");
 				exit(1);					// выход урок сорвался
 			}
 			puts("\n  открывается НОВЫЙ commondictionary.datcommondictionary.dat \"w + b\" на ЗАПИСЬ-ЧТЕНИЕ \n");
-
-		} // end else
-	} // end if (err)
+			
+		}
+		else
+		{
+			exit(1);
+		} // end else 'y' == _getch(stdin)
+	} // end if (err) НЕТ  СТАРОГО файла общей базы слов "r+b" = нет. Делаем новый = "w+b"	
 //__________________________________________________________________________________________
 		/*
 		//// значит открывается НОВЫЙ INI fini.dat "w+b" на ЗАПИСЬ-ЧТЕНИЕ
@@ -133,7 +133,7 @@ int main(int argc, const char ** argv, const char** env)
 
 	//2) есть ли ф fini.dat  ==============================================================
 
-	//2) открытие=проверка сущ-вания стар INI ФАЙЛА пользов настр "fini.dat"=============		
+//_ 1 b __ открытие=проверка сущ-вания стар INI ФАЙЛА пользов настр "fini.dat"=============		
 	err = fopen_s(&pFini, "fini.dat", "r+b");	 // открывается ли на ЧТЕНИЕ с дозаписью
 	if (err)	// НЕТ  СТАРОГО fini.dat "r+b" = нет. Делаем новый = "w+b"							
 	{			// (!!! только "r" в VS чтото не получилось)
