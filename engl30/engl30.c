@@ -47,10 +47,9 @@ int main(int argc, const char ** argv, const char** env)
 	{			// (!!! только "r" в VS чтото не получилось)
 		perror("commondictionary.dat");
 		puts("\n !!! НЕ найден файл commondictionary.dat \n  нажмите 'y или n'\n чтобы создать новый\n");
-		//system("pause");
 		if ('y' == _getch(stdin))//   ============
 		{
-			// значит открывается НОВЫЙ INI commondictionary.dat "w+b" на ЗАПИСЬ-ЧТЕНИЕ
+			// значит открывается НОВЫЙ commondictionary.dat "w+b" на ЗАПИСЬ-ЧТЕНИЕ
 			err = fopen_s(&pFcommon, "commondictionary.dat", "w+b");
 			if (err)	//ошибка выход почему-то  НЕ СОЗДАЛСЯ НОВЫЙ commondictionary.dat
 			{
@@ -60,7 +59,7 @@ int main(int argc, const char ** argv, const char** env)
 				system("pause");
 				exit(1);					// выход урок сорвался
 			}
-			puts("\n  открывается НОВЫЙ commondictionary.datcommondictionary.dat \"w + b\" на ЗАПИСЬ-ЧТЕНИЕ \n");
+			puts("\n  открывается НОВЫЙ commondictionary.dat \"w + b\" на ЗАПИСЬ-ЧТЕНИЕ \n");
 			
 		}
 		else
@@ -68,6 +67,9 @@ int main(int argc, const char ** argv, const char** env)
 			exit(1);
 		} // end else 'y' == _getch(stdin)
 	} // end if (err) НЕТ  СТАРОГО файла общей базы слов "r+b" = нет. Делаем новый = "w+b"	
+	puts("\n  открыт поток pFcommon к ф-лу  commondictionary.dat  \n");
+	// < теперь по указателю pFcommon открыт поток к файлу commondictionary.dat - база слов с переводом
+
 //__________________________________________________________________________________________
 		/*
 		//// значит открывается НОВЫЙ INI fini.dat "w+b" на ЗАПИСЬ-ЧТЕНИЕ
@@ -131,18 +133,19 @@ int main(int argc, const char ** argv, const char** env)
 	//_________________________________________________________________________________________						
 
 
-	//2) есть ли ф fini.dat  ==============================================================
+	//_ 1 b __ есть ли ф fini.dat  ==============================================================
 
 //_ 1 b __ открытие=проверка сущ-вания стар INI ФАЙЛА пользов настр "fini.dat"=============		
 	err = fopen_s(&pFini, "fini.dat", "r+b");	 // открывается ли на ЧТЕНИЕ с дозаписью
 	if (err)	// НЕТ  СТАРОГО fini.dat "r+b" = нет. Делаем новый = "w+b"							
 	{			// (!!! только "r" в VS чтото не получилось)
 		perror("fini.dat");
-		puts("\n !!! НЕ найден ini файл пользователя \n создайте его сортировкой текста \n нажмите ENYKEY чтобы выйти\n");
+		puts("\n !!! НЕ НАЙДЕН ini файл пользователя \n создайте его сортировкой текста \n нажмите ENYKEY чтобы выйти\n");
 		system("pause");
 		//free(psettings->ininamenosortf);
-		free(psettings);//оcвоб пам с настройками из ф ini
+		//free(psettings);//оcвоб пам с настройками из ф ini
 		exit(1);
+
 		/*
 		//// значит открывается НОВЫЙ INI fini.dat "w+b" на ЗАПИСЬ-ЧТЕНИЕ
 		err = fopen_s(&pFini, "fini.dat", "w+b");
@@ -194,7 +197,7 @@ int main(int argc, const char ** argv, const char** env)
 	} // end if "нет  стар fini.dat r+b" = нет. Сделан новый ,,,,,,,,,,,,,,,,,,,,,,,,
 	else // значит существует и открылся fini.dat по указат pFini
 	{
-		// )создание  дин памяти psettings
+		// > создание  дин памяти psettings
 		psettings = (struct inidat*)malloc(sizeof(struct inidat)); //созд ДИН пам под стркт
 		if (psettings == NULL)printf("Не выделена память ini настройки программы \n");
 		else printf("  Выделена дин пам psettings = %d Bytes \n\
@@ -202,14 +205,14 @@ int main(int argc, const char ** argv, const char** env)
 		// считываем из pFini в дин пам - psettings всех настроек
 		size_t result = fread(psettings, sizeof(struct inidat), QUANTITYNAME, pFini);
 		// ввод в psettings имеющихся СТАРЫХ настроек и имени уже разб-го т-та - для открытия ф баз 
-		puts("\n Открылись и перенесены в psettings Начальные СТАРЫЕ  настр-ки (чт с дозап ini ф) \n");
+		puts("\n Открылись и перенесены в psettings Начальн. СТАРЫЕ  настр-ки (чт с дозап ini ф) \n");
 		// закрыть ф поток в который запис ini настройки 
 		system("pause");
 		fclose(pFini);	// закрытие fini.dat 
 
 	}
 
-
-	fclose(pFcommon);//оcвоб пам с настройками из ф ini
+	free(psettings);				//освоб памяти
+	fclose(pFcommon);//закрытие потока
 	system("pause");
 }  //end main
