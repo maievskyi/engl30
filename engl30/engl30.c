@@ -28,11 +28,14 @@ FILE *pFsort;	//---> указатель на структ. ф в котором 
 FILE *pFfreqsort;//---> указ на  ф в котор сохранена частотно-сорт базу слов
 
 
-struct inidat *pcommon;	//--->указ на ДИН пам общей базы слов с перев
+//struct inidat *pcommon;	//--->указ на ДИН пам общей базы слов с перев
 struct inidat *psettings;	//--->указ на ДИН пам базы ini имён и настроек прог-мы
 
 struct word *pmemsortword = NULL;  //--> указ на д пам стрктур с отсортированными словами
 struct word *pcommonsort = NULL;  //--> указ на д пам с базой и отсортированными словами
+int numbertextsort;			//количество слов в тексте
+int numbercommon;			//количество слов в базе
+int numbermixed;			//количество слов в временной смешанной с текстом базе
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%       main     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%//
 int main(int argc, const char ** argv, const char** env)
@@ -131,7 +134,7 @@ int main(int argc, const char ** argv, const char** env)
 		fileSize = ftell(pFsort); //в txtSize = ПОЛУЧАЕМ РАЗМЕР В БАЙТАХ
 		fseek(pFsort, 0, SEEK_SET);	// перевести текущую поз на начало файла
 
-		printf("Размер д пам для алфав-сортированной базы из ф-ла = %d Bytes \n", fileSize);
+		printf("# 2a Размер д пам для алфав-сортированной базы из ф-ла = %d Bytes \n", fileSize);
 			//выделяем эту д память под алф-сорт
 		pmemsortword = (byte*)malloc(fileSize);
 		if (pmemsortword == NULL)
@@ -140,7 +143,7 @@ int main(int argc, const char ** argv, const char** env)
 			system("pause");
 			exit(1);
 		}
-
+		numbertextsort = fileSize;
 		size_t result = fread(pmemsortword, sizeof(byte), fileSize, pFsort);
 		// алф сортиров-й массив слов считан повторн из ф в д п pmemsortword 
 		puts("\n Алфавитно сортированный файл считан номально! \n  \n");
@@ -156,7 +159,7 @@ int main(int argc, const char ** argv, const char** env)
 	fileSize = ftell(pFcommon); //в txtSize = ПОЛУЧАЕМ РАЗМЕР В БАЙТАХ
 	fseek(pFcommon, 0, SEEK_SET);	// перевести текущую поз на начало файла
 
-	printf("Размер д пам для базы из ф-ла commondictionary.dat  = %d Bytes \n", fileSize);
+	printf("# 2b Размер д пам для базы из ф-ла commondictionary.dat  = %d Bytes \n", fileSize);
 	//выделяем эту д память под алф-сорт ??????????????????????????
 	pmemsortword = (byte*)malloc(fileSize);
 	if (pmemsortword == NULL)
@@ -165,6 +168,9 @@ int main(int argc, const char ** argv, const char** env)
 		system("pause");
 		exit(1);
 	}
+	numbercommon = fileSize;
+	numbermixed = numbertextsort + numbercommon;
+	printf("# Размер д пам для смешанной базы и текста из ф-лов numbermixed = %d Bytes \n\n", numbermixed);
 //____________________________________________________________________________________________
 
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   3   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
