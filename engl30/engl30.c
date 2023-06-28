@@ -182,14 +182,6 @@ exit(1);
 }
 printf("# Размер д пам pmixedcommonsort для смеш. базы и сорт текста = %d Bytes \n\n", numbermixed);
 //____________________________________________________________________________________________
-//_ 2 с __ 
-/*
-содержимое строки-поля переносится во временный текстовый файл. Затем файл редактируется 
-командой edit(). По окончанию редактирования содержимое строки из файла переносится в 
-поле структуры в дин памяти
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-*/
 
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   3   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
